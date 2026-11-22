@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Структури клітин та метаболізм — Цифровий урок (10 клас)</title>
+  <style>
+    :root {
+      --bg: #f3f7f5;
+      --card: #ffffff;
+      --ink: #162623;
+      --muted: #506661;
+      --accent: #0f766e;
+      --accent-dark: #115e59;
+      --accent-soft: #e6f4f1;
+      --amber: #b45309;
+      --amber-soft: #fef3c7;
+      --ok: #15803d;
+      --ok-soft: #dcfce7;
+      --bad: #b91c1c;
+      --bad-soft: #fee2e2;
+      --border: #d4e2df;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.55;
+      padding: 20px 14px 40px;
+    }
+    .wrap {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .hero {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 22px 26px;
+      box-shadow: 0 8px 28px rgba(15, 23, 42, 0.06);
+      margin-bottom: 18px;
+    }
+    .hero-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .pill {
+      display: inline-block;
+      background: var(--accent-soft);
+      color: var(--accent-dark);
+      font-weight: 700;
+      font-size: 0.8rem;
+      padding: 4px 11px;
+      border-radius: 999px;
+      margin-bottom: 6px;
+    }
+    h1 {
+      margin: 0 0 6px;
+      font-size: 1.5rem;
+      color: var(--accent);
+    }
+    .hero-meta {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.93rem;
+    }
+    .nav-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+    .nav-btn {
+      padding: 9px 14px;
+      border-radius: 11px;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--ink);
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .nav-btn:hover {
+      border-color: var(--accent);
+    }
+    .nav-btn.active {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+    .nav-btn.async-tab {
+      border-color: #99f6e4;
+      background: #f0fdfa;
+    }
+    .nav-btn.async-tab.active {
+      background: var(--accent-dark);
+      color: #fff;
+      border-color: var(--accent-dark);
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 26px;
+      box-shadow: 0 8px 28px rgba(15, 23, 42, 0.06);
+      margin-bottom: 18px;
+    }
+    h2 {
+      margin: 0 0 8px;
+      font-size: 1.32rem;
+      color: var(--accent-dark);
+    }
+    h3 {
+      margin: 18px 0 8px;
+      font-size: 1.06rem;
+      color: var(--ink);
+    }
+    .prompt-box {
+      background: var(--amber-soft);
+      border-left: 4px solid var(--amber);
+      padding: 14px 16px;
+      border-radius: 10px;
+      margin: 14px 0 18px;
+    }
+    .conclusion-box {
+      display: none;
+      margin-top: 14px;
+      padding: 14px 16px;
+      border-radius: 10px;
+      background: var(--ok-soft);
+      border-left: 4px solid var(--ok);
+      color: var(--ok);
+      font-weight: 600;
+    }
+    .btn {
+      padding: 9px 16px;
+      border-radius: 10px;
+      border: none;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.92rem;
+      cursor: pointer;
+    }
+    .btn:hover:not(:disabled) { background: var(--accent-dark); }
+    .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+    .btn-outline {
+      background: #fff;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+    }
+    .btn-outline:hover:not(:disabled) { background: var(--accent-soft); }
+    .btn-sm { padding: 6px 12px; font-size: 0.85rem; }
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-top: 14px;
+    }
+    .hidden { display: none; }
+
+    /* Етап 2 */
+    .ak-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 11px 16px;
+      margin-bottom: 10px;
+      background: #fcfdfd;
+    }
+    .ak-btns { display: flex; gap: 8px; }
+    .ak-btn {
+      padding: 7px 15px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: #fff;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .ak-btn.ok { background: var(--ok-soft); border-color: var(--ok); color: var(--ok); }
+    .ak-btn.err { background: var(--bad-soft); border-color: var(--bad); color: var(--bad); }
+
+    /* Етап 3 */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0 16px;
+      font-size: 0.94rem;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: middle;
+    }
+    th {
+      background: var(--accent-soft);
+      color: var(--accent-dark);
+      font-weight: 700;
+    }
+    select {
+      width: 100%;
+      padding: 7px 10px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: #fff;
+      font-size: 0.92rem;
+    }
+    select.is-ok { border-color: var(--ok); background: var(--ok-soft); font-weight: 600; }
+    select.is-err { border-color: var(--bad); background: var(--bad-soft); }
+    .key-q {
+      margin-top: 16px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+    }
+    .key-ans {
+      display: none;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed var(--border);
+      color: var(--accent-dark);
+      font-size: 0.94rem;
+    }
+
+    /* Етап 4 */
+    .route-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .station {
+      border: 2px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
+      background: #fff;
+      cursor: pointer;
+      transition: transform 0.15s, border-color 0.15s, background 0.15s;
+    }
+    .station:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .station.active { border-color: var(--accent); background: var(--accent-soft); }
+    .station-num { font-size: 0.78rem; font-weight: 700; color: var(--accent-dark); text-transform: uppercase; }
+    .station-title { font-size: 1.05rem; font-weight: 700; margin: 3px 0; }
+    .station-detail {
+      padding: 15px;
+      border-radius: 12px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      margin-bottom: 16px;
+    }
+    .qa-item {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 15px;
+      margin-bottom: 10px;
+      background: #fff;
+    }
+    .qa-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      font-weight: 600;
+    }
+    .qa-ans {
+      display: none;
+      margin-top: 9px;
+      padding-top: 9px;
+      border-top: 1px dashed var(--border);
+      color: var(--accent-dark);
+      font-size: 0.94rem;
+    }
+
+    /* Етап 5 */
+    .case-card {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 15px;
+      margin-bottom: 12px;
+    }
+    .case-q { font-weight: 600; margin-bottom: 10px; }
+    .choices { display: flex; gap: 8px; flex-wrap: wrap; }
+    .choice-btn {
+      padding: 8px 14px;
+      border-radius: 9px;
+      border: 1px solid var(--border);
+      background: #fff;
+      cursor: pointer;
+      font-size: 0.92rem;
+    }
+    .choice-btn:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-soft); }
+    .choice-btn.ok { background: var(--ok-soft); border-color: var(--ok); color: var(--ok); font-weight: 700; }
+    .choice-btn.err { background: var(--bad-soft); border-color: var(--bad); color: var(--bad); }
+    .case-note { display: none; margin-top: 9px; font-size: 0.91rem; color: var(--accent-dark); }
+    .reflection-box {
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: 14px;
+      background: var(--accent-soft);
+      border: 1px solid var(--border);
+    }
+
+    /* Асинхронна частина */
+    .sub-steps {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .sub-pill {
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      background: #f1f5f9;
+      color: var(--muted);
+    }
+    .sub-pill.current {
+      background: var(--accent);
+      color: #fff;
+    }
+    .student-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    .student-row input, textarea {
+      width: 100%;
+      padding: 10px 13px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      font-family: inherit;
+      font-size: 0.94rem;
+    }
+    textarea { min-height: 68px; resize: vertical; }
+    input:focus, textarea:focus { outline: none; border-color: var(--accent); }
+    .options { display: grid; gap: 9px; margin: 12px 0 14px; }
+    button.opt {
+      text-align: left;
+      padding: 11px 15px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #fff;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+    button.opt:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-soft); }
+    button.opt.correct { background: var(--ok-soft); border-color: var(--ok); color: var(--ok); font-weight: 600; }
+    button.opt.wrong { background: var(--bad-soft); border-color: var(--bad); color: var(--bad); }
+    .feedback {
+      display: none;
+      padding: 12px 15px;
+      border-radius: 10px;
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+      margin-bottom: 14px;
+      font-size: 0.93rem;
+    }
+    .checklist {
+      display: grid;
+      gap: 8px;
+      margin: 12px 0;
+    }
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fcfdfd;
+      cursor: pointer;
+    }
+    .check-item input { margin-top: 4px; accent-color: var(--accent); }
+    .model-answer {
+      display: none;
+      margin-top: 14px;
+      padding: 15px;
+      border-radius: 12px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+    }
+    .self-rate { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+    .rate-btn {
+      padding: 8px 13px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: #fff;
+      cursor: pointer;
+      font-size: 0.89rem;
+    }
+    .rate-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); font-weight: 600; }
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 12px;
+      margin: 14px 0;
+    }
+    .stat-box {
+      padding: 14px;
+      border-radius: 12px;
+      background: var(--accent-soft);
+      border: 1px solid var(--border);
+    }
+    .stat-box .num { font-size: 1.35rem; font-weight: 700; color: var(--accent-dark); }
+    .review-block {
+      margin-top: 14px;
+      padding: 15px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #fcfdfd;
+      font-size: 0.92rem;
+    }
+    .diff-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .diff-card {
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #f8fafc;
+      font-size: 0.91rem;
+    }
+    .copy-msg { color: var(--ok); font-weight: 600; font-size: 0.9rem; margin-left: 8px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <div class="hero-top">
+        <div>
+          <span class="pill">10 клас • Біологія і екологія • 45 хв</span>
+          <h1>Структури клітин, які забезпечують процеси метаболізму</h1>
+          <p class="hero-meta">
+            <strong>Педагогічна ідея:</strong> дослідження клітини як єдиної метаболічної системи, у якій кожна структура виконує узгоджену функцію.
+          </p>
+        </div>
+        <button class="btn btn-outline btn-sm" id="toggle-passport">Паспорт і критерії уроку</button>
+      </div>
+
+      <div id="passport-panel" class="hidden" style="margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); font-size: 0.92rem;">
+        <p style="margin: 0 0 8px;"><strong>Очікувані результати:</strong> учні пояснюють роль органел у метаболізмі; розрізняють анаболізм і катаболізм; встановлюють взаємозв'язки між органелами; прогнозують наслідки порушення їхньої роботи.</p>
+        <div class="diff-grid">
+          <div class="diff-card">
+            <strong>Базова підтримка:</strong><br/>
+            Використовуйте опори: <em>«Ця структура забезпечує…»</em>, <em>«Якщо її робота порушиться, то…»</em>. За нестабільного інтернету завдання виконуються в зошиті (1 фото після відновлення зв'язку).
+          </div>
+          <div class="diff-card">
+            <strong>Поглиблений рівень (виклик):</strong><br/>
+            <em>«Чому рослинній клітині потрібні мітохондрії, якщо вона має хлоропласти?»</em> (АТФ хлоропластів витрачається переважно на цикл Кальвіна вдень, а мітохондрії забезпечують енергією всю клітину цілодобово).
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- НАВІГАЦІЯ УРОКОМ -->
+    <nav class="nav-tabs" aria-label="Етапи уроку">
+      <button class="nav-btn active" data-view="e1">Етап 1. Мотивація (00–03)</button>
+      <button class="nav-btn" data-view="e2">Етап 2. А чи К? (03–06)</button>
+      <button class="nav-btn" data-view="e3">Етап 3. Станції клітини (06–13)</button>
+      <button class="nav-btn" data-view="e4">Етап 4. STEM-маршрут (13–21)</button>
+      <button class="nav-btn" data-view="e5">Етап 5. «Хто винен?» (21–25)</button>
+      <button class="nav-btn async-tab" data-view="async">Асинхронна робота + Результат (20 хв)</button>
+    </nav>
+
+    <!-- ЕТАП 1 -->
+    <section id="e1" class="card view-panel">
+      <span class="pill">Синхронна частина • 3 хв (00–03)</span>
+      <h2>Етап 1. Мотивація «Клітина — жива фабрика»</h2>
+      <div class="prompt-box">
+        <strong>Проблемне запитання:</strong> «Клітина постійно отримує речовини, виробляє енергію, створює білки та позбувається відходів. Що станеться, якщо хоча б одна її структура припинить працювати?»
+      </div>
+      <p>Учні висувають гіпотези в чаті або мікрофоном (наприклад: зупиниться постачання енергії, накопичаться відходи, припиниться синтез білків).</p>
+      <div class="actions">
+        <button class="btn" id="btn-e1">Підбити висновок мотивації</button>
+        <button class="btn btn-outline" data-next="e2">Далі: Етап 2 &rarr;</button>
+      </div>
+      <div class="conclusion-box" id="conc-e1">
+        Висновок: метаболізм забезпечується узгодженою роботою всіх клітинних структур як єдиної системи.
+      </div>
+    </section>
+
+    <!-- ЕТАП 2 -->
+    <section id="e2" class="card view-panel hidden">
+      <span class="pill">Синхронна частина • 3 хв (03–06)</span>
+      <h2>Етап 2. Актуалізація «Анаболізм чи катаболізм?»</h2>
+      <p style="color: var(--muted);">Позначте процеси літерами <strong>А</strong> (анаболізм — пластичний обмін) або <strong>К</strong> (катаболізм — енергетичний обмін):</p>
+      <div id="ak-list"></div>
+      <div class="actions">
+        <button class="btn" id="btn-e2-disc">Енергетичний зв'язок процесів</button>
+        <button class="btn btn-outline" id="btn-e2-reset">Скинути</button>
+        <button class="btn btn-outline" data-next="e3">Далі: Етап 3 &rarr;</button>
+      </div>
+      <div class="conclusion-box" id="conc-e2">
+        Обговорення: анаболізм потребує затрат енергії, а катаболізм забезпечує її вивільнення, частина якої запасається у формі АТФ.
+      </div>
+    </section>
+
+    <!-- ЕТАП 3 -->
+    <section id="e3" class="card view-panel hidden">
+      <span class="pill">Синхронна частина • 7 хв (06–13)</span>
+      <h2>Етап 3. Мінідослідження «Метаболічні станції клітини»</h2>
+      <p style="color: var(--muted);">Зіставте клітинні структури з їхньою провідною роллю в метаболізмі:</p>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 34%;">Структура</th>
+            <th style="width: 66%;">Роль у метаболізмі</th>
+          </tr>
+        </thead>
+        <tbody id="stations-tbody"></tbody>
+      </table>
+      <div class="actions">
+        <button class="btn" id="btn-check-table">Перевірити таблицю</button>
+        <button class="btn btn-outline" id="btn-fill-table">Показати еталон</button>
+        <span id="table-score" style="font-weight: 700; color: var(--accent-dark);"></span>
+        <button class="btn btn-outline" data-next="e4">Далі: Етап 4 &rarr;</button>
+      </div>
+      <div class="key-q">
+        <strong>Ключове запитання:</strong> «Чому мітохондрії називають енергетичними станціями, хоча гліколіз відбувається не в них?»
+        <div class="actions" style="margin-top: 8px;">
+          <button class="btn btn-sm btn-outline" id="btn-key-q">Показати відповідь</button>
+        </div>
+        <div class="key-ans" id="key-ans">
+          У мітохондріях відбувається подальше кисневе окиснення продуктів гліколізу та окисне фосфорилювання, де синтезується основна кількість АТФ (~34–36 молекул проти 2 під час гліколізу).
+        </div>
+      </div>
+    </section>
+
+    <!-- ЕТАП 4 -->
+    <section id="e4" class="card view-panel hidden">
+      <span class="pill">Синхронна частина • 8 хв (13–21)</span>
+      <h2>Етап 4. STEM-завдання «Подорож молекули глюкози»</h2>
+      <div class="prompt-box">
+        <strong>Проблемна ситуація:</strong> «Після фізичного навантаження клітини м'язів потребують більше АТФ. Простежте, як клітина отримує енергію з глюкози».
+      </div>
+      <div class="route-grid" id="route-cards">
+        <div class="station active" data-step="0">
+          <div class="station-num">Станція 1</div>
+          <div class="station-title">Плазматична мембрана</div>
+          <div style="font-size: 0.89rem; color: var(--muted);">Надходження глюкози</div>
+        </div>
+        <div class="station" data-step="1">
+          <div class="station-num">Станція 2</div>
+          <div class="station-title">Цитозоль</div>
+          <div style="font-size: 0.89rem; color: var(--muted);">Гліколіз (глюкоза &rarr; піруват)</div>
+        </div>
+        <div class="station" data-step="2">
+          <div class="station-num">Станція 3</div>
+          <div class="station-title">Мітохондрії</div>
+          <div style="font-size: 0.89rem; color: var(--muted);">Аеробне окиснення та АТФ</div>
+        </div>
+      </div>
+      <div class="station-detail" id="station-detail"></div>
+
+      <div class="qa-item">
+        <div class="qa-head">
+          <span>1. Назвіть структури, залучені до маршруту.</span>
+          <button class="btn btn-sm toggle-ans">Відповідь</button>
+        </div>
+        <div class="qa-ans">Плазматична мембрана (білки-переносники) &rarr; Цитозоль &rarr; Мітохондрії.</div>
+      </div>
+      <div class="qa-item">
+        <div class="qa-head">
+          <span>2. Що станеться з утворенням АТФ, якщо мітохондрії перестануть нормально працювати?</span>
+          <button class="btn btn-sm toggle-ans">Відповідь</button>
+        </div>
+        <div class="qa-ans">Припиниться кисневий етап і окисне фосфорилювання; клітина отримуватиме лише 2 молекули АТФ із гліколізу в цитозолі, що призведе до різкого енергодефіциту.</div>
+      </div>
+      <div class="qa-item">
+        <div class="qa-head">
+          <span>3. Чому для тривалого інтенсивного енергозабезпечення важливий кисень?</span>
+          <button class="btn btn-sm toggle-ans">Відповідь</button>
+        </div>
+        <div class="qa-ans">Кисень приймає електрони наприкінці дихального ланцюга мітохондрій, забезпечуючи повне окиснення органічних сполук до CO<sub>2</sub> і H<sub>2</sub>O з максимальним виходом АТФ.</div>
+      </div>
+
+      <div class="actions">
+        <button class="btn" id="btn-e4-conc">Очікуваний висновок етапу</button>
+        <button class="btn btn-outline" data-next="e5">Далі: Етап 5 &rarr;</button>
+      </div>
+      <div class="conclusion-box" id="conc-e4">
+        Очікуваний висновок: метаболічні реакції просторово розподілені та взаємопов'язані.
+      </div>
+    </section>
+
+    <!-- ЕТАП 5 -->
+    <section id="e5" class="card view-panel hidden">
+      <span class="pill">Синхронна частина • 4 хв (21–25)</span>
+      <h2>Етап 5. Закріплення «Хто винен?» і рефлексія</h2>
+      <div id="e5-cases"></div>
+
+      <div class="reflection-box">
+        <strong>Завершальна рефлексія уроку:</strong>
+        <p style="margin: 6px 0 8px;"><em>«Раніше я вважав / вважала, що органели працюють окремо, а тепер розумію…»</em></p>
+        <textarea id="refl-text" placeholder="Запишіть або озвучте завершення фрази..."></textarea>
+        <div class="actions">
+          <button class="btn btn-sm" id="btn-save-refl">Зафіксувати рефлексію</button>
+          <button class="btn btn-outline btn-sm" data-next="async">Перейти до асинхронної роботи &rarr;</button>
+        </div>
+        <div id="refl-out" style="display: none; margin-top: 10px; font-weight: 600; color: var(--ok);"></div>
+      </div>
+    </section>
+
+    <!-- АСИНХРОННА ЧАСТИНА + КАРТКА РЕЗУЛЬТАТУ -->
+    <section id="async" class="card view-panel hidden">
+      <span class="pill">Асинхронна частина • 20 хв • Оцінювання до 12 балів</span>
+      <h2>Самостійна робота учня та картка результату</h2>
+
+      <div class="sub-steps">
+        <span class="sub-pill current" id="sp-1">1. Тест (5 балів)</span>
+        <span class="sub-pill" id="sp-2">2. DIY-модель (до 5 балів)</span>
+        <span class="sub-pill" id="sp-3">3. Кейс (2 бали)</span>
+        <span class="sub-pill" id="sp-4">4. Картка результату</span>
+      </div>
+
+      <!-- КРОК 1: ТЕСТ -->
+      <div id="async-step-1">
+        <div class="student-row">
+          <input type="text" id="student-name" placeholder="Прізвище, ім'я та клас (наприклад: Коваленко А., 10-А)" />
+        </div>
+        <div style="font-weight: 700; font-size: 1.05rem;" id="q-title"></div>
+        <div class="options" id="q-options"></div>
+        <div class="feedback" id="q-feedback"></div>
+        <div class="actions" style="justify-content: space-between;">
+          <span id="q-counter" style="color: var(--muted); font-size: 0.9rem;"></span>
+          <button class="btn" id="q-next" disabled>Далі</button>
+        </div>
+      </div>
+
+      <!-- КРОК 2: DIY-МОДЕЛЬ -->
+      <div id="async-step-2" class="hidden">
+        <h3>Завдання 2. DIY-модель «Метаболічна карта клітини» (10 хв • до 5 балів)</h3>
+        <p style="margin: 0 0 10px; color: var(--muted);">
+          Створіть схему клітини на аркуші А4 або в цифровому редакторі (фото чи файл прикріпіть у Google Classroom). Позначте виконання обов'язкових умов для самоконтролю:
+        </p>
+        <div class="checklist" id="diy-checklist">
+          <label class="check-item"><input type="checkbox" data-pts="1" /><span>Зображено щонайменше <strong>6 клітинних структур</strong> та підписано їхні функції (до 3 балів разом із точністю).</span></label>
+          <label class="check-item"><input type="checkbox" data-pts="1" /><span>Стрілками показано <strong>функціональні зв'язки</strong> між органелами (наприклад: мембрана &rarr; цитозоль &rarr; мітохондрії).</span></label>
+          <label class="check-item"><input type="checkbox" data-pts="1" /><span>Позначено щонайменше один процес <strong>анаболізму</strong> та один процес <strong>катаболізму</strong>.</span></label>
+          <label class="check-item"><input type="checkbox" data-pts="2" /><span>Письмово пояснено <strong>два взаємозв'язки</strong> між органелами (до 2 балів).</span></label>
+        </div>
+        <div class="actions" style="justify-content: space-between;">
+          <span id="diy-preview" style="font-weight: 600; color: var(--accent-dark);">Самооцінка за чеклистом DIY-моделі: 0 / 5 балів</span>
+          <button class="btn" id="to-step-3">Перейти до біологічного кейсу &rarr;</button>
+        </div>
+      </div>
+
+      <!-- КРОК 3: КЕЙС -->
+      <div id="async-step-3" class="hidden">
+        <h3>Завдання 3. Біологічний кейс «Клітина без енергії» (5 хв • до 2 балів)</h3>
+        <div class="prompt-box">
+          <strong>Умова:</strong> У клітині внаслідок пошкодження порушилася робота <strong>внутрішньої мембрани мітохондрій</strong>. Дайте три короткі відповіді:
+        </div>
+        <div style="margin-bottom: 12px;">
+          <label for="c-ans-1" style="font-weight: 600; display: block; margin-bottom: 4px;">1. Який етап енергетичного обміну найбільше постраждає?</label>
+          <textarea id="c-ans-1" placeholder="Ваша відповідь..."></textarea>
+        </div>
+        <div style="margin-bottom: 12px;">
+          <label for="c-ans-2" style="font-weight: 600; display: block; margin-bottom: 4px;">2. Чому клітина вироблятиме менше АТФ?</label>
+          <textarea id="c-ans-2" placeholder="Ваша відповідь..."></textarea>
+        </div>
+        <div style="margin-bottom: 12px;">
+          <label for="c-ans-3" style="font-weight: 600; display: block; margin-bottom: 4px;">3. Як це вплине на енергозалежні процеси, зокрема активний транспорт речовин?</label>
+          <textarea id="c-ans-3" placeholder="Ваша відповідь..."></textarea>
+        </div>
+        <div class="actions">
+          <button class="btn" id="btn-check-case">Звірити з еталоном</button>
+        </div>
+
+        <div class="model-answer" id="case-model">
+          <strong>Еталонна відповідь для самоперевірки:</strong>
+          <ul style="margin: 8px 0 12px; padding-left: 20px; font-size: 0.93rem;">
+            <li><strong>1. Етап:</strong> кисневий етап — робота дихального ланцюга й окисне фосфорилювання на внутрішній мембрані (кристах).</li>
+            <li><strong>2. Причина меншої кількості АТФ:</strong> без цілісності мембрани не створюється протонний градієнт і не працює АТФ-синтаза, залишається лише малоефективний гліколіз (2 АТФ).</li>
+            <li><strong>3. Вплив на процеси:</strong> через нестачу АТФ енергозалежні процеси (активний транспорт речовин, біосинтез) різко сповільняться або зупиняться.</li>
+          </ul>
+          <strong>Оцініть свої відповіді:</strong>
+          <div class="self-rate">
+            <button type="button" class="rate-btn" data-pts="2">2 бали — усі 3 відповіді аргументовані</button>
+            <button type="button" class="rate-btn" data-pts="1">1 бал — відповіді часткові</button>
+            <button type="button" class="rate-btn" data-pts="0">0 балів — потребує доопрацювання</button>
+          </div>
+          <div class="actions">
+            <button class="btn" id="to-step-4" disabled>Сформувати підсумкову картку результату</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- КРОК 4: КАРТКА РЕЗУЛЬТАТУ -->
+      <div id="async-step-4" class="hidden">
+        <h3>Підсумкова картка результату уроку</h3>
+        <p id="sum-student" style="color: var(--muted); margin: 4px 0 12px;"></p>
+
+        <div class="summary-grid">
+          <div class="stat-box">
+            <div>Інтерактивна самоперевірка</div>
+            <div class="num" id="res-quiz">0 / 5</div>
+          </div>
+          <div class="stat-box">
+            <div>DIY-модель (самооцінка)</div>
+            <div class="num" id="res-diy">0 / 5</div>
+          </div>
+          <div class="stat-box">
+            <div>Біологічний кейс</div>
+            <div class="num" id="res-case">0 / 2</div>
+          </div>
+          <div class="stat-box">
+            <div>Орієнтовний підсумок</div>
+            <div class="num" id="res-total">0 / 12 балів</div>
+          </div>
+        </div>
+
+        <div class="review-block" id="res-details"></div>
+
+        <div class="actions">
+          <button class="btn btn-outline" id="btn-restart-all">Пройти асинхронну частину знову</button>
+          <div>
+            <button class="btn" id="btn-copy-report">Скопіювати звіт для вчителя</button>
+            <span class="copy-msg" id="copy-msg"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // Паспорт уроку
+    document.getElementById("toggle-passport").addEventListener("click", () => {
+      document.getElementById("passport-panel").classList.toggle("hidden");
+    });
+
+    // Навігація між етапами уроку
+    function switchView(viewId) {
+      document.querySelectorAll(".nav-btn").forEach(b => {
+        b.classList.toggle("active", b.dataset.view === viewId);
+      });
+      document.querySelectorAll(".view-panel").forEach(p => {
+        p.classList.toggle("hidden", p.id !== viewId);
+      });
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    document.querySelectorAll(".nav-btn").forEach(btn => {
+      btn.addEventListener("click", () => switchView(btn.dataset.view));
+    });
+    document.querySelectorAll("[data-next]").forEach(btn => {
+      btn.addEventListener("click", () => switchView(btn.dataset.next));
+    });
+
+    // Етап 1
+    document.getElementById("btn-e1").addEventListener("click", () => {
+      document.getElementById("conc-e1").style.display = "block";
+    });
+
+    // Етап 2
+    const akData = [
+      { text: "1. Синтез білка", ans: "А" },
+      { text: "2. Розщеплення глюкози", ans: "К" },
+      { text: "3. Синтез ліпідів", ans: "А" },
+      { text: "4. Розщеплення складних речовин у лізосомах", ans: "К" }
+    ];
+    const akList = document.getElementById("ak-list");
+    function renderAk() {
+      akList.innerHTML = "";
+      akData.forEach(item => {
+        const row = document.createElement("div");
+        row.className = "ak-row";
+        row.innerHTML = `<span>${item.text}</span><div class="ak-btns"></div>`;
+        const box = row.querySelector(".ak-btns");
+        ["А", "К"].forEach(l => {
+          const b = document.createElement("button");
+          b.className = "ak-btn";
+          b.textContent = l;
+          b.addEventListener("click", () => {
+            box.querySelectorAll("button").forEach(x => (x.disabled = true));
+            if (l === item.ans) b.classList.add("ok");
+            else {
+              b.classList.add("err");
+              box.querySelectorAll("button").forEach(x => { if (x.textContent === item.ans) x.classList.add("ok"); });
+            }
+          });
+          box.appendChild(b);
+        });
+        akList.appendChild(row);
+      });
+    }
+    renderAk();
+    document.getElementById("btn-e2-disc").addEventListener("click", () => {
+      document.getElementById("conc-e2").style.display = "block";
+    });
+    document.getElementById("btn-e2-reset").addEventListener("click", () => {
+      document.getElementById("conc-e2").style.display = "none";
+      renderAk();
+    });
+
+    // Етап 3
+    const stationsData = [
+      { struct: "Клітинна мембрана", role: "Вибірковий транспорт речовин" },
+      { struct: "Цитозоль", role: "Гліколіз, численні реакції обміну" },
+      { struct: "Ядро", role: "Регуляція синтезу білків" },
+      { struct: "Рибосоми", role: "Синтез білків" },
+      { struct: "Ендоплазматична сітка", role: "Синтез білків і ліпідів" },
+      { struct: "Комплекс Гольджі", role: "Модифікація, сортування та пакування речовин" },
+      { struct: "Мітохондрії", role: "Основні етапи аеробного клітинного дихання, синтез АТФ" },
+      { struct: "Хлоропласти", role: "Фотосинтез у рослин та водоростей" },
+      { struct: "Лізосоми", role: "Внутрішньоклітинне розщеплення речовин" }
+    ];
+    const tbody = document.getElementById("stations-tbody");
+    const roleOpts = stationsData.map(s => `<option value="${s.role}">${s.role}</option>`).join("");
+    stationsData.forEach((st, i) => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `<td><strong>${st.struct}</strong></td><td><select data-i="${i}"><option value="">— Оберіть роль —</option>${roleOpts}</select></td>`;
+      tbody.appendChild(tr);
+    });
+    document.getElementById("btn-check-table").addEventListener("click", () => {
+      let ok = 0;
+      tbody.querySelectorAll("select").forEach(sel => {
+        const i = Number(sel.dataset.i);
+        sel.classList.remove("is-ok", "is-err");
+        if (sel.value === stationsData[i].role) { sel.classList.add("is-ok"); ok++; }
+        else sel.classList.add("is-err");
+      });
+      document.getElementById("table-score").textContent = `Правильно: ${ok} з ${stationsData.length}`;
+    });
+    document.getElementById("btn-fill-table").addEventListener("click", () => {
+      tbody.querySelectorAll("select").forEach(sel => {
+        const i = Number(sel.dataset.i);
+        sel.value = stationsData[i].role;
+        sel.classList.remove("is-err");
+        sel.classList.add("is-ok");
+      });
+      document.getElementById("table-score").textContent = `Правильно: ${stationsData.length} з ${stationsData.length}`;
+    });
+    document.getElementById("btn-key-q").addEventListener("click", () => {
+      const el = document.getElementById("key-ans");
+      el.style.display = el.style.display === "block" ? "none" : "block";
+    });
+
+    // Етап 4
+    const routeSteps = [
+      {
+        title: "1. Плазматична мембрана — надходження глюкози",
+        text: "Глюкоза потрапляє в клітину м'яза через специфічні білки-переносники."
+      },
+      {
+        title: "2. Цитозоль — гліколіз",
+        text: "Відбувається безкисневе розщеплення: глюкоза → піруват, утворюється невелика кількість АТФ (2 молекули)."
+      },
+      {
+        title: "3. Мітохондрії — аеробний етап та синтез АТФ",
+        text: "Подальше окиснення продуктів гліколізу за наявності кисню та синтез основної кількості АТФ (~34–36 молекул)."
+      }
+    ];
+    const detailEl = document.getElementById("station-detail");
+    function renderRoute(i) {
+      detailEl.innerHTML = `<strong>${routeSteps[i].title}</strong><p style="margin: 6px 0 0;">${routeSteps[i].text}</p>`;
+    }
+    renderRoute(0);
+    document.querySelectorAll("#route-cards .station").forEach(st => {
+      st.addEventListener("click", () => {
+        document.querySelectorAll("#route-cards .station").forEach(x => x.classList.remove("active"));
+        st.classList.add("active");
+        renderRoute(Number(st.dataset.step));
+      });
+    });
+    document.querySelectorAll(".toggle-ans").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const ans = btn.closest(".qa-item").querySelector(".qa-ans");
+        ans.style.display = ans.style.display === "block" ? "none" : "block";
+      });
+    });
+    document.getElementById("btn-e4-conc").addEventListener("click", () => {
+      document.getElementById("conc-e4").style.display = "block";
+    });
+
+    // Етап 5
+    const e5Cases = [
+      { q: "1. Клітина не може нормально синтезувати білки. Яка структура могла постраждати?", opts: ["Рибосоми", "Лізосоми", "Хлоропласти"], ok: 0, note: "Рибосоми безпосередньо здійснюють синтез білків." },
+      { q: "2. Порушилося сортування білків для транспорту. Яка структура вийшла з ладу?", opts: ["Мітохондрії", "Комплекс Гольджі", "Ядро"], ok: 1, note: "Комплекс Гольджі відповідає за модифікацію, сортування та пакування речовин." },
+      { q: "3. У рослинній клітині знизилася здатність використовувати світло для синтезу органічних речовин.", opts: ["Рибосоми", "Комплекс Гольджі", "Хлоропласти"], ok: 2, note: "Хлоропласти забезпечують фотосинтез у рослин та водоростей." }
+    ];
+    const e5Box = document.getElementById("e5-cases");
+    e5Cases.forEach(c => {
+      const div = document.createElement("div");
+      div.className = "case-card";
+      div.innerHTML = `<div class="case-q">${c.q}</div><div class="choices"></div><div class="case-note"></div>`;
+      const ch = div.querySelector(".choices");
+      const nt = div.querySelector(".case-note");
+      c.opts.forEach((o, i) => {
+        const b = document.createElement("button");
+        b.className = "choice-btn";
+        b.textContent = o;
+        b.addEventListener("click", () => {
+          ch.querySelectorAll("button").forEach(x => (x.disabled = true));
+          if (i === c.ok) b.classList.add("ok");
+          else { b.classList.add("err"); ch.querySelectorAll("button")[c.ok].classList.add("ok"); }
+          nt.textContent = c.note;
+          nt.style.display = "block";
+        });
+        ch.appendChild(b);
+      });
+      e5Box.appendChild(div);
+    });
+    document.getElementById("btn-save-refl").addEventListener("click", () => {
+      const v = document.getElementById("refl-text").value.trim();
+      if (!v) return alert("Впишіть завершення думки.");
+      const out = document.getElementById("refl-out");
+      out.textContent = `«Раніше я вважав / вважала, що органели працюють окремо, а тепер розумію ${v}»`;
+      out.style.display = "block";
+    });
+
+    // Асинхронна частина
+    const quizQuestions = [
+      { q: "1. Де в еукаріотичній клітині відбувається гліколіз?", opts: ["У мітохондріях", "У цитозолі", "У ядрі"], ok: 1, why: "Гліколіз перебігає в цитозолі без участі кисню." },
+      { q: "2. Яка структура безпосередньо синтезує білки?", opts: ["Рибосоми", "Лізосоми", "Комплекс Гольджі"], ok: 0, why: "Рибосоми здійснюють складання поліпептидного ланцюга." },
+      { q: "3. Де відбуваються світлові реакції фотосинтезу?", opts: ["У стромі хлоропласта", "На мембранах тилакоїдів", "У цитозолі"], ok: 1, why: "Фотосистеми світлової фази вбудовані в мембрани тилакоїдів." },
+      { q: "4. Яка структура модифікує та сортує білки?", opts: ["Комплекс Гольджі", "Ядро", "Мітохондрія"], ok: 0, why: "Комплекс Гольджі модифікує, сортує та пакує речовини у везикули." },
+      { q: "5. Що може продовжувати відбуватися, коли мітохондрії працюють неправильно?", opts: ["Гліколіз у цитозолі", "Світлові реакції в м'язовій клітині", "Кисневе дихання в ядрі"], ok: 0, why: "Гліколіз відбувається в цитозолі незалежно від мітохондрій." }
+    ];
+
+    let qIdx = 0, quizScore = 0, diyScore = 0, caseScore = null, qLocked = false;
+    const qTitle = document.getElementById("q-title");
+    const qOpts = document.getElementById("q-options");
+    const qFb = document.getElementById("q-feedback");
+    const qNext = document.getElementById("q-next");
+    const qCount = document.getElementById("q-counter");
+
+    function setSubStep(n) {
+      [1, 2, 3, 4].forEach(i => {
+        document.getElementById(`async-step-${i}`).classList.toggle("hidden", i !== n);
+        document.getElementById(`sp-${i}`).classList.toggle("current", i === n);
+      });
+    }
+
+    function renderQuiz() {
+      qLocked = false;
+      qNext.disabled = true;
+      qFb.style.display = "none";
+      const item = quizQuestions[qIdx];
+      qTitle.textContent = item.q;
+      qCount.textContent = `Питання ${qIdx + 1} з ${quizQuestions.length}`;
+      qNext.textContent = qIdx === quizQuestions.length - 1 ? "Перейти до DIY-моделі →" : "Далі";
+      qOpts.innerHTML = "";
+      item.opts.forEach((t, i) => {
+        const b = document.createElement("button");
+        b.className = "opt";
+        b.textContent = t;
+        b.addEventListener("click", () => {
+          if (qLocked) return;
+          qLocked = true;
+          qOpts.querySelectorAll("button").forEach(x => (x.disabled = true));
+          if (i === item.ok) { b.classList.add("correct"); quizScore++; }
+          else { b.classList.add("wrong"); qOpts.querySelectorAll("button")[item.ok].classList.add("correct"); }
+          qFb.innerHTML = `<strong>Пояснення:</strong> ${item.why}`;
+          qFb.style.display = "block";
+          qNext.disabled = false;
+        });
+        qOpts.appendChild(b);
+      });
+    }
+    renderQuiz();
+
+    qNext.addEventListener("click", () => {
+      qIdx++;
+      if (qIdx < quizQuestions.length) renderQuiz();
+      else setSubStep(2);
+    });
+
+    // Чеклист DIY-моделі
+    document.querySelectorAll("#diy-checklist input").forEach(cb => {
+      cb.addEventListener("change", () => {
+        let sum = 0;
+        document.querySelectorAll("#diy-checklist input:checked").forEach(x => (sum += Number(x.dataset.pts)));
+        diyScore = sum;
+        document.getElementById("diy-preview").textContent = `Самооцінка за чеклистом DIY-моделі: ${diyScore} / 5 балів`;
+      });
+    });
+    document.getElementById("to-step-3").addEventListener("click", () => setSubStep(3));
+
+    // Кейс
+    const c1 = document.getElementById("c-ans-1");
+    const c2 = document.getElementById("c-ans-2");
+    const c3 = document.getElementById("c-ans-3");
+    const btnCheckCase = document.getElementById("btn-check-case");
+    const toStep4 = document.getElementById("to-step-4");
+
+    btnCheckCase.addEventListener("click", () => {
+      if (!c1.value.trim() || !c2.value.trim() || !c3.value.trim()) {
+        alert("Заповніть усі три поля кейсу перед перевіркою.");
+        return;
+      }
+      c1.disabled = c2.disabled = c3.disabled = true;
+      btnCheckCase.disabled = true;
+      document.getElementById("case-model").style.display = "block";
+    });
+
+    document.querySelectorAll(".rate-btn").forEach(b => {
+      b.addEventListener("click", () => {
+        document.querySelectorAll(".rate-btn").forEach(x => x.classList.remove("active"));
+        b.classList.add("active");
+        caseScore = Number(b.dataset.pts);
+        toStep4.disabled = false;
+      });
+    });
+
+    function esc(s) {
+      return s.replace(/[&<>"']/g, m => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[m]));
+    }
+
+    toStep4.addEventListener("click", () => {
+      setSubStep(4);
+      const st = document.getElementById("student-name").value.trim() || "Не вказано";
+      const now = new Date().toLocaleString("uk-UA", { dateStyle: "short", timeStyle: "short" });
+      const total = quizScore + diyScore + (caseScore ?? 0);
+
+      document.getElementById("sum-student").textContent = `Учень / учениця: ${st} • Час: ${now}`;
+      document.getElementById("res-quiz").textContent = `${quizScore} / 5`;
+      document.getElementById("res-diy").textContent = `${diyScore} / 5`;
+      document.getElementById("res-case").textContent = `${caseScore} / 2`;
+      document.getElementById("res-total").textContent = `${total} / 12 балів`;
+
+      document.getElementById("res-details").innerHTML = `
+        <strong>Відповіді на кейс «Клітина без енергії»:</strong>
+        <p style="margin: 6px 0;"><strong>1)</strong> ${esc(c1.value.trim())}</p>
+        <p style="margin: 6px 0;"><strong>2)</strong> ${esc(c2.value.trim())}</p>
+        <p style="margin: 6px 0 0;"><strong>3)</strong> ${esc(c3.value.trim())}</p>
+      `;
+    });
+
+    document.getElementById("btn-copy-report").addEventListener("click", async () => {
+      const st = document.getElementById("student-name").value.trim() || "Не вказано";
+      const total = quizScore + diyScore + (caseScore ?? 0);
+      const txt = [
+        `Цифровий урок: Структури клітин та метаболізм (10 клас)`,
+        `Учень/учениця: ${st}`,
+        `1. Інтерактивна самоперевірка: ${quizScore}/5`,
+        `2. DIY-модель (самоконтроль): ${diyScore}/5 (фото/файл додається)`,
+        `3. Біологічний кейс: ${caseScore}/2`,
+        `Орієнтовний підсумок: ${total}/12 балів`,
+        `--- Відповіді на кейс ---`,
+        `1) ${c1.value.trim()}`,
+        `2) ${c2.value.trim()}`,
+        `3) ${c3.value.trim()}`
+      ].join("\n");
+      try {
+        await navigator.clipboard.writeText(txt);
+        const msg = document.getElementById("copy-msg");
+        msg.textContent = "Скопійовано!";
+        setTimeout(() => (msg.textContent = ""), 3000);
+      } catch {
+        alert("Скопіюйте текст вручну або зробіть скриншот.");
+      }
+    });
+
+    document.getElementById("btn-restart-all").addEventListener("click", () => {
+      qIdx = 0; quizScore = 0; diyScore = 0; caseScore = null;
+      document.querySelectorAll("#diy-checklist input").forEach(cb => (cb.checked = false));
+      document.getElementById("diy-preview").textContent = "Самооцінка за чеклистом DIY-моделі: 0 / 5 балів";
+      c1.value = c2.value = c3.value = "";
+      c1.disabled = c2.disabled = c3.disabled = false;
+      btnCheckCase.disabled = false;
+      document.getElementById("case-model").style.display = "none";
+      toStep4.disabled = true;
+      document.querySelectorAll(".rate-btn").forEach(x => x.classList.remove("active"));
+      setSubStep(1);
+      renderQuiz();
+    });
+  </script>
+</body>
+</html>
